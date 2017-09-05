@@ -39,7 +39,7 @@ import java.util.Map;
  * <pre>
  *     java -Dhttp.port=9000 -jar coherence-demo-2.0.0.jar.
  * </pre>
- *
+ * <p>
  * <p>
  * To use a different hostname other than 127.0.0.1 use:
  * <pre>
@@ -54,8 +54,7 @@ import java.util.Map;
  *
  * @author Brian Oliver
  */
-public class Launcher
-{
+public class Launcher {
     /**
      * System property to override primary name.
      */
@@ -82,7 +81,6 @@ public class Launcher
     private static String PRIMARY_DEFAULT;
 
     /**
-     *
      * Default cluster name for secondary cluster.
      */
     private static String SECONDARY_DEFAULT;
@@ -93,8 +91,7 @@ public class Launcher
     private static Map<String, Pair<String, String>> mapZones;
 
 
-    static
-    {
+    static {
         // initialize the list of default cluster names
         mapZones = new HashMap<>();
 
@@ -131,8 +128,7 @@ public class Launcher
     }
 
 
-    public static void main(String[] args) throws Exception
-    {
+    public static void main(String[] args) throws Exception {
         // set JVisualVM refresh time to 5 seconds for demo purposes only
         System.setProperty("com.oracle.coherence.jvisualvm.refreshtime", "5");
 
@@ -157,7 +153,7 @@ public class Launcher
         // set properties for cluster names so they are passed to other processes
         System.setProperty(PRIMARY_CLUSTER_PROPERTY, System.getProperty(PRIMARY_CLUSTER_PROPERTY, PRIMARY_DEFAULT));
         System.setProperty(SECONDARY_CLUSTER_PROPERTY,
-                           System.getProperty(SECONDARY_CLUSTER_PROPERTY, SECONDARY_DEFAULT));
+                System.getProperty(SECONDARY_CLUSTER_PROPERTY, SECONDARY_DEFAULT));
 
         // set cluster name
         System.setProperty("coherence.cluster", System.getProperty(PRIMARY_CLUSTER_PROPERTY));
@@ -170,63 +166,44 @@ public class Launcher
     /**
      * Chose defaults for primary and secondary cluster based upon your location.
      */
-    private static void chooseDefaults()
-    {
-        String zone   = ZoneId.systemDefault().toString();
+    private static void chooseDefaults() {
+        String zone = ZoneId.systemDefault().toString();
         Locale locale = Locale.getDefault();
 
         System.out.println("*** Locale: " + locale + ", Country=" + locale.getCountry() + ", Lang="
-                           + locale.getLanguage() + ", Zone: " + zone);
+                + locale.getLanguage() + ", Zone: " + zone);
 
         // try direct matches first
         Pair<String, String> entry = mapZones.get(zone);
 
-        if (entry != null)
-        {
-            PRIMARY_DEFAULT   = entry.getX();
+        if (entry != null) {
+            PRIMARY_DEFAULT = entry.getX();
             SECONDARY_DEFAULT = entry.getY();
-        }
-        else
-        {
+        } else {
             // no direct match so make some broad assumptions
-            if (zone.startsWith("Australia"))
-            {
-                PRIMARY_DEFAULT   = "Sydney";
+            if (zone.startsWith("Australia")) {
+                PRIMARY_DEFAULT = "Sydney";
                 SECONDARY_DEFAULT = "Perth";
-            }
-            else if (zone.startsWith("Africa"))
-            {
-                PRIMARY_DEFAULT   = "Cape Town";
+            } else if (zone.startsWith("Africa")) {
+                PRIMARY_DEFAULT = "Cape Town";
                 SECONDARY_DEFAULT = "London";
-            }
-            else if (zone.startsWith("Brazil"))
-            {
-                PRIMARY_DEFAULT   = "Brasilia";
+            } else if (zone.startsWith("Brazil")) {
+                PRIMARY_DEFAULT = "Brasilia";
                 SECONDARY_DEFAULT = "London";
-            }
-            else if (zone.startsWith("Canada"))
-            {
-                PRIMARY_DEFAULT   = "Vancouver";
+            } else if (zone.startsWith("Canada")) {
+                PRIMARY_DEFAULT = "Vancouver";
                 SECONDARY_DEFAULT = "Montreal";
-            }
-            else if (zone.startsWith("Europe"))
-            {
-                PRIMARY_DEFAULT   = "London";
+            } else if (zone.startsWith("Europe")) {
+                PRIMARY_DEFAULT = "London";
                 SECONDARY_DEFAULT = "NewYork";
-            }
-            else if (zone.startsWith("Pacific"))
-            {
-                PRIMARY_DEFAULT   = "Honolulu";
+            } else if (zone.startsWith("Pacific")) {
+                PRIMARY_DEFAULT = "Honolulu";
                 SECONDARY_DEFAULT = "San Francisco";
-            }
-            else if (zone.startsWith("US") || zone.startsWith("America") || locale.getCountry().equalsIgnoreCase("US"))
-            {
-                PRIMARY_DEFAULT   = "New York";
+            } else if (zone.startsWith("US") || zone.startsWith("America") || locale.getCountry().equalsIgnoreCase("US")) {
+                PRIMARY_DEFAULT = "New York";
                 SECONDARY_DEFAULT = "San Francisco";
-            }
-            else
-            {
-                PRIMARY_DEFAULT   = "Primary";
+            } else {
+                PRIMARY_DEFAULT = "Primary";
                 SECONDARY_DEFAULT = "Secondary";
             }
         }

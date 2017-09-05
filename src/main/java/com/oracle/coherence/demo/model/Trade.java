@@ -37,8 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "trade")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class Trade implements PortableObject
-{
+public class Trade implements PortableObject {
     private static final long serialVersionUID = -2557078539268609864L;
 
     /**
@@ -85,8 +84,7 @@ public class Trade implements PortableObject
     /**
      * Default Constructor (required and used only by {@link PortableObject}).
      */
-    public Trade()
-    {
+    public Trade() {
         // required for Serializable and PortableObject
     }
 
@@ -94,18 +92,17 @@ public class Trade implements PortableObject
     /**
      * The standard constructor for a {@link Trade}.
      *
-     * @param symbol  symbol (ticker code) of the {@link Trade}
-     * @param amount  number of shares (quantity) for the {@link Trade}
-     * @param price   price of the shares
+     * @param symbol symbol (ticker code) of the {@link Trade}
+     * @param amount number of shares (quantity) for the {@link Trade}
+     * @param price  price of the shares
      */
     public Trade(String symbol,
-                 int    amount,
-                 double price)
-    {
-        this.id     = new UUID();
+                 int amount,
+                 double price) {
+        this.id = new UUID();
         this.symbol = symbol;
         this.amount = amount;
-        this.price  = price;
+        this.price = price;
     }
 
 
@@ -114,8 +111,7 @@ public class Trade implements PortableObject
      *
      * @return the identifier
      */
-    public UUID getId()
-    {
+    public UUID getId() {
         return id;
     }
 
@@ -125,8 +121,7 @@ public class Trade implements PortableObject
      *
      * @return the symbol
      */
-    public String getSymbol()
-    {
+    public String getSymbol() {
         return symbol;
     }
 
@@ -136,8 +131,7 @@ public class Trade implements PortableObject
      *
      * @return the price
      */
-    public double getPrice()
-    {
+    public double getPrice() {
         return price;
     }
 
@@ -147,8 +141,7 @@ public class Trade implements PortableObject
      *
      * @return the amount
      */
-    public int getAmount()
-    {
+    public int getAmount() {
         return amount;
     }
 
@@ -158,8 +151,7 @@ public class Trade implements PortableObject
      *
      * @return the value
      */
-    public double getPurchaseValue()
-    {
+    public double getPurchaseValue() {
         return getAmount() * getPrice();
     }
 
@@ -169,25 +161,22 @@ public class Trade implements PortableObject
      *
      * @param price the new price.
      */
-    public void setPrice(double price)
-    {
+    public void setPrice(double price) {
         this.price = price;
     }
 
 
     @Override
-    public void readExternal(PofReader reader) throws IOException
-    {
-        id     = reader.readObject(ID);
+    public void readExternal(PofReader reader) throws IOException {
+        id = reader.readObject(ID);
         symbol = reader.readString(SYMBOL);
         amount = reader.readInt(AMOUNT);
-        price  = reader.readDouble(PRICE);
+        price = reader.readDouble(PRICE);
     }
 
 
     @Override
-    public void writeExternal(PofWriter writer) throws IOException
-    {
+    public void writeExternal(PofWriter writer) throws IOException {
         writer.writeObject(ID, id);
         writer.writeString(SYMBOL, symbol);
         writer.writeInt(AMOUNT, amount);

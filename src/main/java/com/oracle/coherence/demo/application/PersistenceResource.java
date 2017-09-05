@@ -35,16 +35,15 @@ import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
  * A JAX-RS resource providing the ability to control persistence by issuing
  * the following commands:
  * <ul>
- *     <li>createSnapshot - Create a snapshot with the name SNAPSHOT_NAME. If the snapshot already exists it will be removed first</li>
- *     <li>removeSnapshot - Remove a snapshot with the name SNAPSHOT_NAME.</li>
- *     <li>recoverSnapshot - Recover a snapshot with the name SNAPSHOT_NAME.</li>
+ * <li>createSnapshot - Create a snapshot with the name SNAPSHOT_NAME. If the snapshot already exists it will be removed first</li>
+ * <li>removeSnapshot - Remove a snapshot with the name SNAPSHOT_NAME.</li>
+ * <li>recoverSnapshot - Recover a snapshot with the name SNAPSHOT_NAME.</li>
  * </ul>
  *
  * @author Tim Middleton
  */
 @Path("/persistence")
-public class PersistenceResource
-{
+public class PersistenceResource {
     /**
      * Name of the service we are using.
      */
@@ -60,41 +59,35 @@ public class PersistenceResource
     @Path("{command}")
     @Produces({TEXT_PLAIN})
     @SuppressWarnings("unchecked")
-    public Response stopMember(@PathParam("command") String command) throws InterruptedException, MBeanException
-    {
-        Cluster  cluster  = CacheFactory.getCluster();
+    public Response stopMember(@PathParam("command") String command) throws InterruptedException, MBeanException {
+        Cluster cluster = CacheFactory.getCluster();
         Registry registry = cluster.getManagement();
 
-        if (registry != null)
-        {
-            PersistenceHelper helper   = new PersistenceHelper();
-            Object            response = "OK";
+        if (registry != null) {
+            PersistenceHelper helper = new PersistenceHelper();
+            Object response = "OK";
 
-            switch (command)
-            {
-            case "createSnapshot" :
-                removeSnapshot(helper);
-                helper.invokeOperationWithWait(PersistenceHelper.CREATE_SNAPSHOT, SNAPSHOT_NAME, SERVICE_NAME);
-                break;
+            switch (command) {
+                case "createSnapshot":
+                    removeSnapshot(helper);
+                    helper.invokeOperationWithWait(PersistenceHelper.CREATE_SNAPSHOT, SNAPSHOT_NAME, SERVICE_NAME);
+                    break;
 
-            case "removeSnapshot" :
-                removeSnapshot(helper);
-                break;
+                case "removeSnapshot":
+                    removeSnapshot(helper);
+                    break;
 
-            case "recoverSnapshot" :
-                if (helper.snapshotExists(SERVICE_NAME, SNAPSHOT_NAME))
-                {
-                    helper.invokeOperationWithWait(PersistenceHelper.RECOVER_SNAPSHOT, SNAPSHOT_NAME, SERVICE_NAME);
-                }
-                else
-                {
-                    response = "Snapshot does not exist";
-                }
+                case "recoverSnapshot":
+                    if (helper.snapshotExists(SERVICE_NAME, SNAPSHOT_NAME)) {
+                        helper.invokeOperationWithWait(PersistenceHelper.RECOVER_SNAPSHOT, SNAPSHOT_NAME, SERVICE_NAME);
+                    } else {
+                        response = "Snapshot does not exist";
+                    }
 
-                break;
+                    break;
 
-            default :
-                return Response.status(404).build();
+                default:
+                    return Response.status(404).build();
             }
 
             return Response.ok(response).build();
@@ -107,14 +100,11 @@ public class PersistenceResource
     /**
      * Remove the snapshot.
      *
-     * @param helper  PersistenceToolsHelper used to remove the snapshot
-     *
+     * @param helper PersistenceToolsHelper used to remove the snapshot
      * @throws MBeanException if any errors
      */
-    private void removeSnapshot(PersistenceHelper helper) throws MBeanException
-    {
-        if (helper.snapshotExists(SERVICE_NAME, SNAPSHOT_NAME))
-        {
+    private void removeSnapshot(PersistenceHelper helper) throws MBeanException {
+        if (helper.snapshotExists(SERVICE_NAME, SNAPSHOT_NAME)) {
             helper.invokeOperationWithWait(PersistenceHelper.REMOVE_SNAPSHOT, SNAPSHOT_NAME, SERVICE_NAME);
         }
     }

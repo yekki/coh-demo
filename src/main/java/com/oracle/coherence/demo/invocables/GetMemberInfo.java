@@ -42,8 +42,7 @@ import java.io.IOException;
  *
  * @author Brian Oliver
  */
-public class GetMemberInfo extends AbstractInvocable implements PortableObject
-{
+public class GetMemberInfo extends AbstractInvocable implements PortableObject {
     /**
      * POF index for cacheName attribute.
      */
@@ -58,40 +57,35 @@ public class GetMemberInfo extends AbstractInvocable implements PortableObject
     /**
      * Constructs a {@link GetMemberInfo} (for serialization)
      */
-    public GetMemberInfo()
-    {
+    public GetMemberInfo() {
     }
 
 
     /**
      * Constructs a {@link GetMemberInfo} for a specified cache.
      *
-     * @param cacheName  name of the cache to get information for.
+     * @param cacheName name of the cache to get information for.
      */
-    public GetMemberInfo(String cacheName)
-    {
+    public GetMemberInfo(String cacheName) {
         super();
         this.cacheName = cacheName;
     }
 
 
     @Override
-    public void run()
-    {
+    public void run() {
         // calculate number of entries for the specified named cache
         int entryCount = 0;
         NamedCache namedCache = CacheFactory.getTypedCache(cacheName,
-                                                           TRADE_CACHE.equals(cacheName)
-                                                           ? TRADE_CACHE_TYPE : PRICE_CACHE_TYPE);
+                TRADE_CACHE.equals(cacheName)
+                        ? TRADE_CACHE_TYPE : PRICE_CACHE_TYPE);
 
-        if (namedCache != null)
-        {
+        if (namedCache != null) {
             CacheService cacheService = namedCache.getCacheService();
 
-            if (cacheService.getBackingMapManager() instanceof ExtensibleConfigurableCacheFactory.Manager)
-            {
+            if (cacheService.getBackingMapManager() instanceof ExtensibleConfigurableCacheFactory.Manager) {
                 ExtensibleConfigurableCacheFactory.Manager backingMapManager =
-                    (ExtensibleConfigurableCacheFactory.Manager) cacheService.getBackingMapManager();
+                        (ExtensibleConfigurableCacheFactory.Manager) cacheService.getBackingMapManager();
 
                 entryCount = backingMapManager.getBackingMap(cacheName).size();
             }
@@ -111,15 +105,13 @@ public class GetMemberInfo extends AbstractInvocable implements PortableObject
 
 
     @Override
-    public void readExternal(PofReader reader) throws IOException
-    {
+    public void readExternal(PofReader reader) throws IOException {
         cacheName = reader.readString(CACHE_NAME);
     }
 
 
     @Override
-    public void writeExternal(PofWriter writer) throws IOException
-    {
+    public void writeExternal(PofWriter writer) throws IOException {
         writer.writeString(CACHE_NAME, cacheName);
     }
 }

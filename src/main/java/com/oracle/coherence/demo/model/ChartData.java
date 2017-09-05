@@ -43,8 +43,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "chart-data")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class ChartData implements PortableObject
-{
+public class ChartData implements PortableObject {
     private static final long serialVersionUID = -4557078639768809864L;
 
     /**
@@ -141,8 +140,7 @@ public class ChartData implements PortableObject
     /**
      * Default Constructor (required and used only by {@link PortableObject}).
      */
-    public ChartData()
-    {
+    public ChartData() {
         // required for Serializable and PortableObject
     }
 
@@ -160,25 +158,24 @@ public class ChartData implements PortableObject
      * @param symbolPrice         symbol prices
      * @param symbolCount         count of symbols
      */
-    public ChartData(long                   instant,
-                     int                    positionCount,
-                     Collection<String>     symbols,
-                     Map<String, Long>      symbolFrequency,
-                     double                 originalValuation,
+    public ChartData(long instant,
+                     int positionCount,
+                     Collection<String> symbols,
+                     Map<String, Long> symbolFrequency,
+                     double originalValuation,
                      Collection<MemberInfo> memberInfo,
-                     long                   aggregationDuration,
-                     Map<String, Double>    symbolPrice,
-                     Map<String, Integer>   symbolCount)
-    {
-        this.instant             = instant;
-        this.positionCount       = positionCount;
-        this.symbols             = new TreeSet<>(symbols);
-        this.symbolFrequency     = new HashMap<>(symbolFrequency);
-        this.originalValuation   = originalValuation;
-        this.memberInfo          = new Vector<>(memberInfo);
+                     long aggregationDuration,
+                     Map<String, Double> symbolPrice,
+                     Map<String, Integer> symbolCount) {
+        this.instant = instant;
+        this.positionCount = positionCount;
+        this.symbols = new TreeSet<>(symbols);
+        this.symbolFrequency = new HashMap<>(symbolFrequency);
+        this.originalValuation = originalValuation;
+        this.memberInfo = new Vector<>(memberInfo);
         this.aggregationDuration = aggregationDuration;
-        this.symbolPrice         = symbolPrice;
-        this.symbolCount         = symbolCount;
+        this.symbolPrice = symbolPrice;
+        this.symbolCount = symbolCount;
     }
 
 
@@ -187,8 +184,7 @@ public class ChartData implements PortableObject
      *
      * @return the time
      */
-    public long getInstant()
-    {
+    public long getInstant() {
         return instant;
     }
 
@@ -198,8 +194,7 @@ public class ChartData implements PortableObject
      *
      * @return the number of positions
      */
-    public int getPositionCount()
-    {
+    public int getPositionCount() {
         return positionCount;
     }
 
@@ -209,8 +204,7 @@ public class ChartData implements PortableObject
      *
      * @return the symbols
      */
-    public Set<String> getSymbols()
-    {
+    public Set<String> getSymbols() {
         return symbols;
     }
 
@@ -220,8 +214,7 @@ public class ChartData implements PortableObject
      *
      * @return the symbol frequency
      */
-    public Map<String, Long> getSymbolFrequency()
-    {
+    public Map<String, Long> getSymbolFrequency() {
         return symbolFrequency;
     }
 
@@ -231,8 +224,7 @@ public class ChartData implements PortableObject
      *
      * @return the symbol price
      */
-    public Map<String, Double> getSymbolPrice()
-    {
+    public Map<String, Double> getSymbolPrice() {
         return symbolPrice;
     }
 
@@ -242,8 +234,7 @@ public class ChartData implements PortableObject
      *
      * @return symbol count
      */
-    public Map<String, Integer> getSymbolCount()
-    {
+    public Map<String, Integer> getSymbolCount() {
         return symbolCount;
     }
 
@@ -253,8 +244,7 @@ public class ChartData implements PortableObject
      *
      * @return the original valuation
      */
-    public double getOriginalValuation()
-    {
+    public double getOriginalValuation() {
         return originalValuation;
     }
 
@@ -264,8 +254,7 @@ public class ChartData implements PortableObject
      *
      * @return the list of {@link MemberInfo}
      */
-    public List<MemberInfo> getMemberInfo()
-    {
+    public List<MemberInfo> getMemberInfo() {
         return memberInfo;
     }
 
@@ -275,30 +264,27 @@ public class ChartData implements PortableObject
      *
      * @return the duration
      */
-    public long getAggregationDuration()
-    {
+    public long getAggregationDuration() {
         return aggregationDuration;
     }
 
 
     @Override
-    public void readExternal(PofReader reader) throws IOException
-    {
-        instant             = reader.readLong(INSTANT);
+    public void readExternal(PofReader reader) throws IOException {
+        instant = reader.readLong(INSTANT);
         aggregationDuration = reader.readLong(AGGREGATION_DURATION);
-        positionCount       = reader.readInt(POSITION_COUNT);
-        symbols             = reader.readCollection(SYMBOLS, new TreeSet<>());
-        symbolFrequency     = reader.readMap(SYMBOL_FREQUENCY, new HashMap<>());
-        symbolPrice         = reader.readMap(SYMBOL_PRICE, new HashMap<>());
-        symbolCount         = reader.readMap(SYMBOL_COUNT, new HashMap<>());
-        originalValuation   = reader.readDouble(ORIGINAL_VALUATION);
-        memberInfo          = reader.readCollection(MEMBER_INFO, new Vector<>());
+        positionCount = reader.readInt(POSITION_COUNT);
+        symbols = reader.readCollection(SYMBOLS, new TreeSet<>());
+        symbolFrequency = reader.readMap(SYMBOL_FREQUENCY, new HashMap<>());
+        symbolPrice = reader.readMap(SYMBOL_PRICE, new HashMap<>());
+        symbolCount = reader.readMap(SYMBOL_COUNT, new HashMap<>());
+        originalValuation = reader.readDouble(ORIGINAL_VALUATION);
+        memberInfo = reader.readCollection(MEMBER_INFO, new Vector<>());
     }
 
 
     @Override
-    public void writeExternal(PofWriter writer) throws IOException
-    {
+    public void writeExternal(PofWriter writer) throws IOException {
         writer.writeLong(INSTANT, instant);
         writer.writeLong(AGGREGATION_DURATION, aggregationDuration);
         writer.writeInt(POSITION_COUNT, positionCount);
