@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.oracle.coherence</groupId>
+  <artifactId>coherence-demo</artifactId>
+  <version>2.0.1-SNAPSHOT</version>
+  <url>https://github.com/coherence-community/coherence-demo</url>
+  <developers>
+    <developer>
+      <name>Brian Oliver</name>
+      <email>brian.oliver@oracle.com&gt;</email>
+      <organization>Oracle Corporation</organization>
+    </developer>
+    <developer>
+      <name>Tim Middleton</name>
+      <email>tim.middleton@oracle.com&gt;</email>
+      <organization>Oracle Corporation</organization>
+    </developer>
+  </developers>
+  <licenses>
+    <license>
+      <name>Universal Permissive License 1.0 ("UPL")</name>
+      <url>https://opensource.org/licenses/UPL</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <connection>scm:git:https://github.com/coherence-community/coherence-demo.git</connection>
+    <developerConnection>scm:git:https://github.com/coherence-community/coherence-demo.git</developerConnection>
+    <url>https://github.com/coherence-community/coherence-demo.git</url>
+  </scm>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.5.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.4.3</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer>
+                  <mainClass>com.oracle.coherence.demo.application.Launcher</mainClass>
+                  <manifestEntries>
+                    <Implementation-GroupId>com.oracle.coherence</Implementation-GroupId>
+                    <Implementation-Description>Demonstration</Implementation-Description>
+                    <Implementation-Vendor>Oracle</Implementation-Vendor>
+                    <Implementation-Version>${actual.coherence.version}</Implementation-Version>
+                    <Implementation-Build>demo</Implementation-Build>
+                    <Specification-Vendor>Oracle</Specification-Vendor>
+                    <Specification-Version>${actual.coherence.version}</Specification-Version>
+                  </manifestEntries>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.4</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.10.3</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.gmaven</groupId>
+        <artifactId>gmaven-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <id>add-dynamic-properties</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>execute</goal>
+            </goals>
+            <configuration>
+              <source>properties = project.properties
+                                version    = properties.getProperty("coherence.version")
+                                properties.setProperty("actual.coherence.version", version.replaceAll('-','.'))</source>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <properties>
+    <jersey.version>2.25.1</jersey.version>
+    <coherence.version>12.2.1-3-0</coherence.version>
+    <actual.coherence.version>12.2.1-3-0</actual.coherence.version>
+    <grizzly.version>2.4.1</grizzly.version>
+    <jackson.version>2.9.0</jackson.version>
+    <bedrock.version>4.5.0</bedrock.version>
+  </properties>
+</project>
+
